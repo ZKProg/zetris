@@ -1,0 +1,74 @@
+
+engine.hpp,1038
+class EngineEngine12,130
+  int _currentTetrominoX, _currentTetrominoY;_currentTetrominoX29,467
+  int _currentTetrominoX, _currentTetrominoY;_currentTetrominoY29,467
+  SDL_Window *_mainWindow;_mainWindow30,513
+  SDL_Renderer *_mainRenderer;_mainRenderer31,540
+  SDL_Event _events;_events32,571
+  bool _isRunning = true;_isRunning34,593
+  bool _fpsToOSD = false;_fpsToOSD35,619
+  int _mouseX = 0;_mouseX37,647
+  int _mouseY = 0;_mouseY38,666
+  Uint32 _timeReference;_timeReference39,685
+  Uint32 _fpsReference;_fpsReference40,710
+  float _numberOfFrames = 0;_numberOfFrames42,735
+  float _fps = 60.0f;_fps43,764
+  std::map<int, SDL_Texture*> _tetrominoTextures;_tetrominoTextures47,871
+  std::vector<UIElement> _UIElements;_UIElements49,924
+  std::unique_ptr<Grid> _grid;_grid50,962
+  TTF_Font *_osdFont;_osdFont53,997
+  enum GameState {GameState55,1022
+    HOME,HOME56,1041
+    PLAY,PLAY57,1051
+    GAME_OVER,GAME_OVER58,1061
+    TRANSITIONTRANSITION59,1076
+  } _GameState;_GameState60,1091
+
+grid.hpp,280
+typedef unsigned short tetromino;tetromino5,32
+class GridGrid7,67
+  int _w, _h;_w52,797
+  int _w, _h;_h52,797
+  int _posX, _posY;_posX53,811
+  int _posX, _posY;_posY53,811
+  std::unique_ptr<int> _grid;_grid54,831
+  SDL_Texture *_borderTexture;_borderTexture55,861
+
+UIElement.hpp,377
+class UIElementUIElement3,18
+  int _posX, _posY, _w, _h;_posX20,526
+  int _posX, _posY, _w, _h;_posY20,526
+  int _posX, _posY, _w, _h;_w20,526
+  int _posX, _posY, _w, _h;_h20,526
+  SDL_Color _bgColor;_bgColor21,554
+  SDL_Rect _UIRect;_UIRect22,576
+  std::string _name;_name23,596
+  TTF_Font *_font;_font24,617
+  SDL_Texture *_fontTexture;_fontTexture25,636
+
+engine.cpp,388
+Engine::Engine() :Engine3,23
+Engine::~Engine()~Engine14,204
+void Engine::initEngine()initEngine27,438
+void Engine::mainLoop()mainLoop114,2594
+void Engine::exitWithError(const std::string& error)exitWithError193,4665
+void Engine::renderMenu()renderMenu199,4760
+void Engine::renderGameScreen()renderGameScreen218,5190
+void Engine::renderText(int x, int y,renderText261,6152
+
+grid.cpp,283
+Grid::Grid(SDL_Renderer *renderer, int w, int h)Grid3,21
+Grid::~Grid()~Grid29,630
+void Grid::render(SDL_Renderer *renderer, SDL_Texture *tetrominoesTexture)render36,652
+void Grid::renderTetrominoAfterTest (tetromino *t, SDL_Renderer *renderer,renderTetrominoAfterTest73,1614
+
+main.cpp,43
+int main (int argc, char **argv)main8,79
+
+UIElement.cpp,333
+UIElement::UIElement(const std::string& name,UIElement3,26
+UIElement::~UIElement()~UIElement30,747
+bool UIElement::isClicked(const int &mouseX, const int &mouseY) noexceptisClicked36,778
+void UIElement::renderElement(SDL_Renderer *renderer) noexceptrenderElement49,1063
+std::string UIElement::getName() constgetName66,1387
