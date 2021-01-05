@@ -161,6 +161,7 @@ void Engine::renderOSD(int x, int y) {
   
   // @TODO To improve! Needs a lot more information to display.
   std::string fpsMessage = std::string("FPS: ") + std::to_string(_numberOfFrames);
+  fpsMessage += " Target FPS: " + std::to_string(__gameMixin._targetFps);
   renderText(x, y, fpsMessage);
 
 
