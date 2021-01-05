@@ -14,6 +14,7 @@ include_directories(
 file (
   GLOB
   zetris_SRC
+  "*.h"
   "*.hpp"
   "*.cpp"
   )

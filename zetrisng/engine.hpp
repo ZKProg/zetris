@@ -1,11 +1,12 @@
 #pragma once
 
 #include "pch.h"
+#include "globals.h"
 
 class Engine
 {
 public:
-  explicit Engine(GameMixin& gameMixin, const std::string& osdFontFile = ".fonts/roboto-regular.ttf");
+  explicit Engine(GameMixin& gameMixin, const std::string& osdFontFile = "./fonts/roboto-regular.ttf");
   virtual ~Engine();
 
   bool init();

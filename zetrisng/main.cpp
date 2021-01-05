@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "engine.hpp"
-
+#include "globals.h"
 
 int main (int argc, char **argv)
 {
