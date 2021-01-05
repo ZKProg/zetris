@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <map>
 #include <thread>
+#include <stdexcept>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>

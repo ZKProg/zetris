@@ -30,3 +30,13 @@ enum GameState {
   GAME_OVER,
   LOADING
 };
+
+// Exception definition(s)
+class EngineException : public std::exception
+{
+ public:
+  virtual const char* what() const throw()
+  {
+    return "Failure to initialize the engine.";
+  }
+} static engineException;

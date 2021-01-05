@@ -7,7 +7,12 @@ Engine::Engine(GameMixin& gameMixin, const std::string& osdFontFile)
   _bgRect = {0, 0, __gameMixin._winWidth, __gameMixin._winHeight};
 
   try {
-    this->init();
+    if (this->init()) {
+      std::cout << "Core engine successfully initialized." << std::endl;
+    }
+    else {
+      throw engineException;
+    }
   }
   catch(std::exception &e) {
     std::cout << "The game could not start: " << e.what() << std::endl;
