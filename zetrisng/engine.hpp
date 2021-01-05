@@ -15,6 +15,7 @@ public:
 
   void renderUIs();
   void renderGameSurface();
+  void renderOSD(int x, int y);
   void renderText(int x, int y,
 		  const std::string& text);
   void cleanWindowBackground();
@@ -29,7 +30,7 @@ protected:
   bool _isRunning = true;
   bool _fpsToOSD = false;
   bool _isMouseButtonPressed = false;
-  
+
   int _mouseX;
   int _mouseY;
   float _numberOfFrames;

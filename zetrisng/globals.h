@@ -18,7 +18,7 @@ struct GameMixin
   int _osdFontSize = 16;
   std::string _winTitle = "";
   std::string _gameName = "";
-  float _targetFps = 2.0f;
+  float _targetFps = 600000.0f;
   unsigned short _numThreads = 4;
   bool _fpsToOSD = false;
   SDL_Color _backgroundColor = {0, 0, 0, 255}; // Back background color

@@ -79,7 +79,6 @@ void Engine::mainLoop()
   // for 60fps, the duration of a frame should be of 16.66ms
   float frameMs = 1.f / __gameMixin._targetFps * 1000; // x1000 as of milliseconds
   
-  
   while (_isRunning) {
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -96,6 +95,9 @@ void Engine::mainLoop()
 	switch (keysym) {
 	case SDLK_ESCAPE:
 	  _isRunning = false;
+	  break;
+	case SDLK_F1:
+	  _fpsToOSD = !_fpsToOSD;
 	  break;
 	
 	}
@@ -118,11 +120,17 @@ void Engine::mainLoop()
     // ENGINE CALLS
     if (SDL_GetTicks() - _fpsReference > frameMs) {
       // can call the fps rendering/engine based methods
-      this->renderText(400, 400, "This is a test");
+
+      // Rendering OSD if enabled
+      _numberOfFrames = 1000.f / (SDL_GetTicks() - _fpsReference);
+      if (_fpsToOSD) this->renderOSD(5, 5);
+
+      // Render the whole bunch
       SDL_RenderPresent(_mainRenderer);
 
       // reinitialize the timestamp reference for next frame 
       _fpsReference = SDL_GetTicks();
+
       SDL_RenderClear(_mainRenderer);
     }
       
@@ -146,6 +154,15 @@ void renderUIs()
 
 void Engine::renderGameSurface()
 {
+
+}
+
+void Engine::renderOSD(int x, int y) {
+  
+  // @TODO To improve! Needs a lot more information to display.
+  std::string fpsMessage = std::string("FPS: ") + std::to_string(_numberOfFrames);
+  renderText(x, y, fpsMessage);
+
 
 }
 
