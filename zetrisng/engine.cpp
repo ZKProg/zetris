@@ -113,10 +113,12 @@ void Engine::mainLoop()
     // ENGINE CALLS
     if (SDL_GetTicks() - _fpsReference > frameMs) {
       // can call the fps rendering/engine based methods
-
+      this->renderText(400, 400, "This is a test");
+      SDL_RenderPresent(_mainRenderer);
 
       // reinitialize the timestamp reference for next frame 
       _fpsReference = SDL_GetTicks();
+      SDL_RenderClear(_mainRenderer);
     }
       
     
@@ -146,7 +148,15 @@ void Engine::renderGameSurface()
 void Engine::renderText(int x, int y,
 			const std::string& text)
 {
+  SDL_Surface *textSurface = TTF_RenderText_Solid(_osdFont, text.c_str(), {255, 255, 255, 255});
+  SDL_Texture *textTexture = SDL_CreateTextureFromSurface(_mainRenderer, textSurface);
 
+  int w, h;
+  SDL_QueryTexture(textTexture, nullptr, nullptr, &w, &h);
+  SDL_Rect dst = {x, y, w, h};
+  SDL_RenderCopy(_mainRenderer, textTexture, nullptr, &dst);
+
+  SDL_FreeSurface(textSurface);
 }
 
 
