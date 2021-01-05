@@ -2,11 +2,13 @@
 
 #include "pch.h"
 #include "globals.h"
+#include "uielement.hpp"
 
 class Engine
 {
 public:
-  explicit Engine(GameMixin& gameMixin, const std::string& osdFontFile = "./fonts/roboto-regular.ttf");
+  explicit Engine(GameMixin& gameMixin,
+		  const std::string& osdFontFile = "./fonts/roboto-regular.ttf");
   virtual ~Engine();
 
   bool init();
@@ -14,6 +16,7 @@ public:
   bool exitWithError(const std::string& error);
 
   void renderUIs();
+  void checkClickedUis();
   void renderGameSurface();
   void renderOSD(int x, int y);
   void renderText(int x, int y,
@@ -43,6 +46,6 @@ protected:
   TTF_Font *_osdFont;
   GameState _gameState;
   std::string _osdFontFile;
-
+  std::vector<UIelement> _homeUIelements;
 };
 
