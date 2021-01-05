@@ -67,8 +67,18 @@ bool Engine::init()
 void Engine::mainLoop()
 {
   std::cout << "Game " << __gameMixin._gameName << " starting." << std::endl;
-
+  std::cout << "Target FPS of " << __gameMixin._targetFps << "fps." << std::endl;
+  
+  // init the time reference for fps counting and fps based rendering
+  _fpsReference = SDL_GetTicks();
+  // for 60fps, the duration of a frame should be of 16.66ms
+  float frameMs = 1.f / __gameMixin._targetFps * 1000; // x1000 as of milliseconds
+  
+  
   while (_isRunning) {
+
+    ////////////////////////////////////////////////////////////////////////////////
+    // EVENTS
     while (SDL_PollEvent(&_event) > 0) {
 
       // Window events ////////////////////////////////////////////////////////////
@@ -98,6 +108,18 @@ void Engine::mainLoop()
 	_isMouseButtonPressed = false;
       }
     }
+
+    ////////////////////////////////////////////////////////////////////////////////
+    // ENGINE CALLS
+    if (SDL_GetTicks() - _fpsReference > frameMs) {
+      // can call the fps rendering/engine based methods
+
+
+      // reinitialize the timestamp reference for next frame 
+      _fpsReference = SDL_GetTicks();
+    }
+      
+    
   }
   
 }
