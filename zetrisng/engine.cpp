@@ -5,6 +5,7 @@ Engine::Engine(GameMixin& gameMixin, const std::string& osdFontFile)
 {
   _osdFontFile = osdFontFile;
   _bgRect = {0, 0, __gameMixin._winWidth, __gameMixin._winHeight};
+  _gameState = HOME_MENU;
 
   try {
     if (this->init()) {
@@ -61,6 +62,13 @@ bool Engine::init()
   _osdFont = TTF_OpenFont(_osdFontFile.c_str(), __gameMixin._osdFontSize);
   if (_osdFont == nullptr) exitWithError(TTF_GetError());
 
+  // UI ---------------------------------------------------------------------------
+  // @TODO add real menu
+  UIelement firstElement(30, 30, 300, 50, _mainRenderer, "PLAY");
+  UIelement secondElement(30, 90, 300, 50, _mainRenderer, "About");
+  _homeUIelements.push_back(firstElement);
+  _homeUIelements.push_back(secondElement);
+  
   // Initialization is complete. Clean the screen before proceeding.
   cleanWindowBackground();
    
@@ -108,6 +116,8 @@ void Engine::mainLoop()
 	SDL_GetMouseState(&_mouseX, &_mouseY);
 	_isMouseButtonPressed = true;
 
+	this->checkClickedUis();
+	
       }
 
       if (_event.type == SDL_MOUSEBUTTONUP) {
@@ -119,13 +129,17 @@ void Engine::mainLoop()
     ////////////////////////////////////////////////////////////////////////////////
     // ENGINE CALLS
     if (SDL_GetTicks() - _fpsReference > frameMs) {
-      // can call the fps rendering/engine based methods
+      // can call the fps rendering/engine based methods,
+      // and depending on modes (HOME, MENU...)
+      this->cleanWindowBackground();
+      this->renderUIs();
 
+      
       // Rendering OSD if enabled
       _numberOfFrames = 1000.f / (SDL_GetTicks() - _fpsReference);
       if (_fpsToOSD) this->renderOSD(5, 5);
 
-      // Render the whole bunch
+      // Render on screen the whole bunch
       SDL_RenderPresent(_mainRenderer);
 
       // reinitialize the timestamp reference for next frame 
@@ -146,11 +160,28 @@ bool Engine::exitWithError(const std::string& error)
 }
 
 
-void renderUIs()
+void Engine::renderUIs()
 {
+  if (_gameState == HOME_MENU) {
+    for (const auto& UIelement : _homeUIelements) {
+      UIelement.renderElement();
+    }
+  }
+  else if (_gameState == IN_GAME) {
 
+
+  }
 }
 
+void Engine::checkClickedUis()
+{
+  if (_gameState == HOME_MENU) {
+    for (const auto& UIelement : _homeUIelements) {
+      UIelement.isClicked(_mouseX, _mouseY);
+    }
+  }
+
+}
 
 void Engine::renderGameSurface()
 {
@@ -185,13 +216,14 @@ void Engine::renderText(int x, int y,
 
 void Engine::cleanWindowBackground()
 {
-  SDL_RenderClear(_mainRenderer);
+  // @TODO see if commented out are kept
+  //SDL_RenderClear(_mainRenderer);
   SDL_SetRenderDrawColor(_mainRenderer,
 			 __gameMixin._backgroundColor.r,
 			 __gameMixin._backgroundColor.g,
 			 __gameMixin._backgroundColor.b,
 			 __gameMixin._backgroundColor.a);
   SDL_RenderFillRect(_mainRenderer, &_bgRect);
-  SDL_RenderPresent(_mainRenderer);
+  //SDL_RenderPresent(_mainRenderer);
 
 }
