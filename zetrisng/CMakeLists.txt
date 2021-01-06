@@ -6,10 +6,20 @@ set(CMAKE_CXX_FLAGS "-Wall -fopenmp")
 
 project(zetris VERSION 0.1)
 
-include_directories(
-  ${CMAKE_SOURCE_DIR}/
-  ${CMAKE_SOURCE_DIR}/include
-  )
+if (UNIX)
+  include_directories(
+    ${CMAKE_SOURCE_DIR}/
+    ${CMAKE_SOURCE_DIR}/include
+    )
+endif()
+
+if (WIN32)
+  include_directories(
+    ${CMAKE_SOURCE_DIR}/
+    ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_SOURCE_DIR}/win/include
+    )
+endif()
 
 file (
   GLOB
@@ -30,13 +40,33 @@ target_precompile_headers(
   pch.h
   )
 
-target_link_libraries(
-  zetris
-  SDL2
-  SDL2main
-  SDL2_image
-  SDL2_ttf
-  pthread
-  sqlite3
-  )
+if (UNIX)
+  target_link_libraries(
+    zetris
+    SDL2
+    SDL2main
+    SDL2_image
+    SDL2_ttf
+    pthread
+    sqlite3
+    )
+endif()
+
+if (WIN32)
+
+  target_link_directories(
+    zetris
+    PUBLIC
+    ${CMAKE_SOURCE_DIR}/win/lib
+    )
+
   
+  target_link_libraries(
+    zetris
+    SDL2
+    SDL2main
+    SDL2_image
+    SDL2_ttf
+    )
+endif()
+

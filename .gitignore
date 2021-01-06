@@ -3,3 +3,11 @@ CMakeCache.txt
 Makefile
 zetris
 cmake_install.cmake
+x64/
+zetris.dir/
+ALL_BUILD*
+ZERO_*
+zetris.sln
+zetris.vcxproj
+zetrisng/zetris.vcxproj
+zetris.vcxproj.filters
