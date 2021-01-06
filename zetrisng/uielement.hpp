@@ -18,9 +18,12 @@ public:
   
   bool isClicked(const int& mouseX, const int& mouseY) const;
   bool isHovered();
+  void setCallbackFunction(void(*callback)());
   
 protected:
 
+  bool _callbackFunctionSet = false;
+  void (*_callbackFunction)();
   int _zindex;
   int _x, _y, _w, _h;
   int _textX, _textY, _textW, _textH;

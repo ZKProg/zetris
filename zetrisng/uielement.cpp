@@ -7,7 +7,7 @@ UIelement::UIelement(const int& x, const int& y,
 		     const std::string& font,
 		     const SDL_Color& bgColor,
 		     const SDL_Color& fontColor)
-  : _x(x), _y(y), _w(w), _h(h), _font(font),
+  : _callbackFunction(nullptr), _x(x), _y(y), _w(w), _h(h), _font(font),
     _bgColor(bgColor), _fontColor(_bgColor), 
     _ttfFont(nullptr), _textTexture(nullptr), _renderer(renderer)
 {
@@ -31,8 +31,10 @@ UIelement::UIelement(const int& x, const int& y,
 
 UIelement::~UIelement()
 {
-
-
+  if (_callbackFunction != nullptr) {
+    // @TODO check: not sure the behavior is predictable here
+    delete (int*)_callbackFunction;
+  }
 }
 
 void UIelement::renderElement() const noexcept
@@ -46,7 +48,6 @@ void UIelement::renderElement() const noexcept
 			 _bgColor.a);
   SDL_RenderFillRect(_renderer, &rectBackground);
   SDL_RenderCopy(_renderer, _textTexture, nullptr, &rectText);
-  
 }
 
 
@@ -56,6 +57,11 @@ bool UIelement::isClicked(const int& mouseX, const int& mouseY) const
       &&
       (mouseY > _y && mouseY < _y + _h)) {
 
+    if (_callbackFunctionSet && _callbackFunction != nullptr) {
+      _callbackFunction();
+    }
+    
+    // @TODO remove the id text cout
     std::cout << _id << " clicked." << std::endl;
     return true;
   }
@@ -67,7 +73,14 @@ bool UIelement::isClicked(const int& mouseX, const int& mouseY) const
 
 bool UIelement::isHovered()
 {
-  
+  // @TODO implement
 
   return false;
+}
+
+
+void UIelement::setCallbackFunction(void (*callback)())
+{
+  _callbackFunction = callback;
+  _callbackFunctionSet = true;
 }
