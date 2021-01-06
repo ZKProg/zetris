@@ -1,20 +1,81 @@
 
-engine.cpp,0
-
-grid.cpp,0
-
-main.cpp,0
-
-menu.cpp,0
-
-uielement.cpp,0
-
-engine.hpp,0
+engine.hpp,791
+class EngineEngine8,98
+  GameMixin __gameMixin;__gameMixin28,548
+  SDL_Window *_mainWindow;_mainWindow30,574
+  SDL_Renderer *_mainRenderer;_mainRenderer31,601
+  SDL_Event _event;_event32,632
+  bool _isRunning = true;_isRunning34,653
+  bool _fpsToOSD = false;_fpsToOSD35,679
+  bool _isMouseButtonPressed = false;_isMouseButtonPressed36,705
+  int _mouseX;_mouseX38,744
+  int _mouseY;_mouseY39,759
+  float _numberOfFrames;_numberOfFrames40,774
+  Uint32 _timeReference;_timeReference41,799
+  Uint32 _fpsReference;_fpsReference42,824
+  SDL_Rect _bgRect;_bgRect44,849
+  SDL_Color _bgColor;_bgColor45,869
+  TTF_Font *_osdFont;_osdFont47,892
+  GameState _gameState;_gameState48,914
+  std::string _osdFontFile;_osdFontFile49,938
+  Menu _homeMenu;_homeMenu50,966
 
 grid.hpp,0
 
-menu.hpp,0
+menu.hpp,78
+class MenuMenu6,57
+  std::vector<UIelement> _UIelements;_UIelements17,255
 
-uielement.hpp,0
+uielement.hpp,793
+class UIelementUIelement5,32
+  bool _callbackFunctionSet = false;_callbackFunctionSet25,615
+  void (*_callbackFunction)();_callbackFunction26,652
+  int _zindex;_zindex27,683
+  int _x, _y, _w, _h;_x28,698
+  int _x, _y, _w, _h;_y28,698
+  int _x, _y, _w, _h;_w28,698
+  int _x, _y, _w, _h;_h28,698
+  int _textX, _textY, _textW, _textH;_textX29,720
+  int _textX, _textY, _textW, _textH;_textY29,720
+  int _textX, _textY, _textW, _textH;_textW29,720
+  int _textX, _textY, _textW, _textH;_textH29,720
+  std::string _font;_font30,758
+  std::string _id;_id31,779
+  SDL_Color _bgColor;_bgColor33,799
+  SDL_Color _fontColor;_fontColor34,821
+  TTF_Font *_ttfFont;_ttfFont35,845
+  SDL_Texture *_textTexture;_textTexture36,867
+  SDL_Renderer *_renderer;_renderer37,896
 
-pch.h,0
+engine.cpp,607
+Engine::Engine(GameMixin& gameMixin, const std::string& osdFontFile)Engine3,23
+Engine::~Engine()~Engine24,515
+bool Engine::init()init35,693
+void Engine::mainLoop()mainLoop81,2286
+bool Engine::exitWithError(const std::string& error)exitWithError157,4433
+void Engine::renderUIs()renderUIs164,4579
+void Engine::checkClickedUis()checkClickedUis175,4712
+void Engine::renderGameSurface()renderGameSurface183,4835
+void Engine::renderOSD(int x, int y) {renderOSD188,4874
+void Engine::renderText(int x, int y,renderText199,5175
+void Engine::cleanWindowBackground()cleanWindowBackground214,5628
+
+grid.cpp,0
+
+main.cpp,43
+int main (int argc, char **argv)main5,61
+
+menu.cpp,236
+Menu::Menu()Menu3,21
+Menu::~Menu()~Menu10,42
+void Menu::addElement(const UIelement& element)addElement17,66
+void Menu::render()render23,154
+void Menu::checkMouseClick(const int& mouseX, const int& mouseY)checkMouseClick31,256
+
+uielement.cpp,394
+UIelement::UIelement(const int& x, const int& y,UIelement3,26
+UIelement::~UIelement()~UIelement32,1001
+void UIelement::renderElement() const noexceptrenderElement40,1170
+bool UIelement::isClicked(const int& mouseX, const int& mouseY) constisClicked54,1549
+bool UIelement::isHovered()isHovered74,1948
+void UIelement::setCallbackFunction(void (*callback)())setCallbackFunction82,2020

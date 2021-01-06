@@ -66,8 +66,11 @@ bool Engine::init()
   // @TODO add real menu
   UIelement firstElement(30, 30, 300, 50, _mainRenderer, "PLAY");
   UIelement secondElement(30, 90, 300, 50, _mainRenderer, "About");
-  _homeUIelements.push_back(firstElement);
-  _homeUIelements.push_back(secondElement);
+  UIelement quitElement(30, 150, 300, 50, _mainRenderer, "Quit");
+  quitElement.setCallbackFunction(sayBuy);
+  _homeMenu.addElement(firstElement);
+  _homeMenu.addElement(secondElement);
+  _homeMenu.addElement(quitElement);
   
   // Initialization is complete. Clean the screen before proceeding.
   cleanWindowBackground();
@@ -163,9 +166,7 @@ bool Engine::exitWithError(const std::string& error)
 void Engine::renderUIs()
 {
   if (_gameState == HOME_MENU) {
-    for (const auto& UIelement : _homeUIelements) {
-      UIelement.renderElement();
-    }
+    _homeMenu.render();
   }
   else if (_gameState == IN_GAME) {
 
@@ -176,9 +177,7 @@ void Engine::renderUIs()
 void Engine::checkClickedUis()
 {
   if (_gameState == HOME_MENU) {
-    for (const auto& UIelement : _homeUIelements) {
-      UIelement.isClicked(_mouseX, _mouseY);
-    }
+    _homeMenu.checkMouseClick(_mouseX, _mouseY);
   }
 
 }
@@ -226,4 +225,11 @@ void Engine::cleanWindowBackground()
   SDL_RenderFillRect(_mainRenderer, &_bgRect);
   //SDL_RenderPresent(_mainRenderer);
 
+}
+
+
+// Callbacks //////////////////////////////////////////////////////////////////////////
+void Engine::sayBuy()
+{
+  exit(0);
 }

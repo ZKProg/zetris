@@ -23,7 +23,7 @@ public:
 protected:
 
   bool _callbackFunctionSet = false;
-  void (*_callbackFunction)();
+  void (*_callbackFunction)() = nullptr;
   int _zindex;
   int _x, _y, _w, _h;
   int _textX, _textY, _textW, _textH;

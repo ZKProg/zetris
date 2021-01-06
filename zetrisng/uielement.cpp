@@ -7,7 +7,7 @@ UIelement::UIelement(const int& x, const int& y,
 		     const std::string& font,
 		     const SDL_Color& bgColor,
 		     const SDL_Color& fontColor)
-  : _callbackFunction(nullptr), _x(x), _y(y), _w(w), _h(h), _font(font),
+  :  _x(x), _y(y), _w(w), _h(h), _font(font),
     _bgColor(bgColor), _fontColor(_bgColor), 
     _ttfFont(nullptr), _textTexture(nullptr), _renderer(renderer)
 {
@@ -31,10 +31,7 @@ UIelement::UIelement(const int& x, const int& y,
 
 UIelement::~UIelement()
 {
-  if (_callbackFunction != nullptr) {
-    // @TODO check: not sure the behavior is predictable here
-    delete (int*)_callbackFunction;
-  }
+
 }
 
 void UIelement::renderElement() const noexcept
@@ -57,7 +54,7 @@ bool UIelement::isClicked(const int& mouseX, const int& mouseY) const
       &&
       (mouseY > _y && mouseY < _y + _h)) {
 
-    if (_callbackFunctionSet && _callbackFunction != nullptr) {
+    if (_callbackFunction != nullptr) {
       _callbackFunction();
     }
     
@@ -84,3 +81,4 @@ void UIelement::setCallbackFunction(void (*callback)())
   _callbackFunction = callback;
   _callbackFunctionSet = true;
 }
+

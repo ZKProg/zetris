@@ -2,6 +2,7 @@
 
 #include "pch.h"
 #include "globals.h"
+#include "menu.hpp"
 #include "uielement.hpp"
 
 class Engine
@@ -21,7 +22,10 @@ public:
   void renderOSD(int x, int y);
   void renderText(int x, int y,
 		  const std::string& text);
-  void cleanWindowBackground();
+  void cleanWindowBackground();  
+
+  // @TODO dev callbacks to remove
+  static void sayBuy();
   
 protected:
   GameMixin __gameMixin;
@@ -46,6 +50,6 @@ protected:
   TTF_Font *_osdFont;
   GameState _gameState;
   std::string _osdFontFile;
-  std::vector<UIelement> _homeUIelements;
+  Menu _homeMenu;
 };
 

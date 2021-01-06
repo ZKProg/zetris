@@ -27,3 +27,10 @@ void Menu::render()
   }
 }
 
+
+void Menu::checkMouseClick(const int& mouseX, const int& mouseY)
+{
+  for (const auto& element: _UIelements) {
+    element.isClicked(mouseX, mouseY);
+  }
+}
