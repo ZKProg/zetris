@@ -4,8 +4,6 @@
 
 int main (int argc, char **argv)
 {
-
-
   GameMixin gameMixin(800, 600, "Zetris By ZKProg 0.1", "ZETRIS");
 
   
